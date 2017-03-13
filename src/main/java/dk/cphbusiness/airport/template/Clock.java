@@ -4,11 +4,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Clock implements Runnable {
-  private final long sleepingTime = 10;
+  private final long sleepingTime = 5;
   private boolean running = true;
   private final PassengerProducer producer;
   private final PassengerConsumer consumer;
   private long millis;
+  private int ticks;
   
   public Clock(PassengerProducer producer, PassengerConsumer consumer, Time startTime) {
     this.producer = producer;
@@ -32,6 +33,12 @@ public class Clock implements Runnable {
         producer.tick(this);
         consumer.tick(this);
         millis += 1000;
+        ticks++;
+        if (consumer.queue.size()>50){
+            consumer.queue.printQueue();
+            running = false;
+        }
+        
         }
       } 
     catch (InterruptedException ex) {

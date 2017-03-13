@@ -46,12 +46,15 @@ public class PassengerProducer {
         category = Category.LateToFlight;
     else if (c < 10) category = Category.BusinessClass;
     else if (c < 11) category = Category.Disabled;
-    else if (c < 15) category = Category.Family;
+    else if (c < 50) category = Category.Family; // original val == 15
     else category = Category.Monkey;
     
     Passenger passenger = new Passenger(nextPassengerId++, now, category, plane);
-    System.out.println("Passenger "+passenger+" added to queue");
+//    System.out.println("Passenger "+passenger+" added to queue");
     queue.enqueue(passenger);
+//      System.out.println("*******QUEUED! " + passenger + "*********");
+//      System.out.println("queue SIZE: " + queue.size());
+    processingTicksLeft = randomizer.nextInt(110);
     }
   
   
